@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Module Test App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Workout Module Test App</h1>
+
+        <form id="generateExerciseForm">
+            <h2>Generate Exercises</h2>
+            
+            <label for="exerciseMuscle">Muscle:</label>
+            <input type="text" id="exerciseMuscle" placeholder="t.ex chest" required>
+
+            <label for="exerciseType">Type:</label> 
+            <input type="text" id="exerciseType" placeholder="t.ex strongman" required>
+
+            <label for="exerciseDifficulty">Difficulty:</label>
+            <input type="text" id="exerciseDifficulty" placeholder="t.ex intermediate" required>
+
+            <button type="submit">Generate Exercises</button>
+        </form>
+        <div id="exerciseResultDisplay"></div>
+
+
+
+      <form id="createWorkoutForm">
+            <h2>Create Workout</h2>
+            <label for="muscles">Muscles (comma-separated):</label>
+            <input type="text" id="muscles" placeholder="e.g. chest, lats" required>
+
+            <label for="workoutType">Workout Type:</label>
+            <input type="text" id="workoutType" placeholder="e.g. strength" required>
+
+            <label for="difficulty">Difficulty Level:</label>
+            <input type="text" id="difficulty" placeholder="e.g. beginner" required>
+
+            <button type="submit">Create Workout</button>
+        </form>
+        <div id="workoutResultDisplay"></div>
+
+
+    
+        <form id="workoutSplitForm">
+            <h2>Create Workout Split</h2>
+            <label for="splitType">Select Workout Split:</label>
+            <select id="splitType">
+                <option value="pplSplit">Push/Pull/Legs Split</option>
+                <option value="arnoldSplit">Arnold Split</option>
+                <option value="fullBodySplit">Full Body Split</option>
+                <option value="upperLowerSplit">Upper/Lower Split</option>
+                <option value="fourDaySplit">Four-Day Split</option>
+                <option value="fiveDaySplit">Five-Day Split</option>
+              </select>              
+
+            <label for="splitWorkoutType">Workout Type:</label>
+            <input type="text" id="splitWorkoutType" placeholder="e.g., strength" required>
+
+            <label for="splitDifficulty">Difficulty Level:</label>
+            <input type="text" id="splitDifficulty" placeholder="e.g., beginner" required>
+
+            <button type="submit">Generate Workout Split</button>
+        </form>
+        <div id="splitResultDisplay"></div>
+    </div>  
+
+    <script type="module" src="index.js"></script>
+</body>
+</html>
