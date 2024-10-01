@@ -1,7 +1,7 @@
 
 import { generateExercises, createWorkout, createWorkoutSplit, getRecommendedRepsAndSets, getExerciseTips } from "./assignmentL2/workoutModule/fitnessTracker.js";
 
-// Select DOM elements for the forms and result displays
+// DOM elements
 const generateExerciseForm = document.getElementById("generateExerciseForm");
 const exerciseResultDisplay = document.getElementById("exerciseResultDisplay");
 const createWorkoutForm = document.getElementById("createWorkoutForm");
@@ -10,28 +10,26 @@ const workoutSplitForm = document.getElementById("workoutSplitForm");
 const splitResultDisplay = document.getElementById("splitResultDisplay");
 
 
-
-// generateExercises 
+/**
+ * Event listener for the submit event of the exercise form.
+ * It retrieves the form values, generates the exercises,
+ * and displays them on the page.
+ */
 generateExerciseForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  // Get user input values
   const muscle = document.getElementById("exerciseMuscle").value;
   const type = document.getElementById("exerciseType").value;
   const difficulty = document.getElementById("exerciseDifficulty").value;
 
-  // Debugging: Check if inputs are being captured correctly
   console.log("Form submitted with values:", { muscle, type, difficulty });
 
   try {
-    // Fetch exercises
     const exercises = await generateExercises(muscle, type, difficulty);
     console.log(exercises)
-    
-    // Debugging: Log the fetched exercises
+
     console.log("Fetched exercises:", exercises);
 
-    // Display the exercises (if any were fetched)
     if (exercises && exercises.length > 0) {
       exerciseResultDisplay.innerHTML = exercises.map(exercise => `
         <p>Name: ${exercise.name}<br>
@@ -40,41 +38,39 @@ generateExerciseForm.addEventListener("submit", async (event) => {
         Difficulty: ${exercise.difficulty}<br>
         Instructions: ${exercise.instructions}</p>`).join('');
 
-            // Display recommended sets and reps
-      const recommendations = getRecommendedRepsAndSets(difficulty);
+        const recommendations = getRecommendedRepsAndSets(difficulty);
       exerciseResultDisplay.innerHTML += `
         <p><strong>Recommended Sets:</strong> ${recommendations.sets}</p>
         <p><strong>Recommended Reps:</strong> ${recommendations.reps}</p>`;
 
-      // Display exercise tips
-      const tips = getExerciseTips(type);
+        const tips = getExerciseTips(type);
       exerciseResultDisplay.innerHTML += `
         <p><strong>Exercise Tips:</strong> ${tips}</p>`;
-      
+
     } else {
       exerciseResultDisplay.innerHTML = `<p>No exercises found for the selected criteria.</p>`;
     }
   } catch (error) {
-    // Debugging: Log any errors
     console.error("Error fetching exercises:", error);
     exerciseResultDisplay.innerHTML = `<p>Error: ${error.message}</p>`;
   }
 });
 
-// Create Workout Function
+/**
+ * Event listener for the submit event of the workout form.
+ * It retrieves the form values, creates the workout,
+ * and displays the workout plan on the page.
+ */
 createWorkoutForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  
-  // Get user input values
+
   const muscles = document.getElementById("muscles").value.split(",").map(muscle => muscle.trim());
   const type = document.getElementById("workoutType").value;
   const difficulty = document.getElementById("difficulty").value;
-  
+
   try {
-      // Create workout
       const workout = await createWorkout(muscles, type, difficulty);
-      
-      // Display the workout
+
       workoutResultDisplay.innerHTML = `
           <div class="workout-plan">
               ${Object.entries(workout).map(([muscle, exercises]) => `
@@ -93,29 +89,30 @@ createWorkoutForm.addEventListener("submit", async (event) => {
               `).join('')}
           </div>
       `;
-      
+
   } catch (error) {
       workoutResultDisplay.innerHTML = `<p>Error creating workout: ${error.message}</p>`;
   }
 });
 
-
-
+/**
+ * Event listener for the submit event of the workout split form.
+ * It retrieves the form values, creates the workout split,
+ * and logs the workout plan to the console.
+ */
 workoutSplitForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  
+
   const splitType = document.getElementById("splitType").value;
   const workoutType = document.getElementById("splitWorkoutType").value;
   const difficulty = document.getElementById("splitDifficulty").value;
-  
+
   try {
-    // Generate workout split
+
     const workoutPlan = await createWorkoutSplit(splitType, workoutType, difficulty);
-    
-    // Log the workout plan for debugging
+
     console.log("Workout Plan:", workoutPlan);
-    
-    // Display the workout splits
+
     splitResultDisplay.innerHTML = `
       <h2>${splitType.charAt(0).toUpperCase() + splitType.slice(1)} Workout Plan</h2>
       <div class="workout-splits">
