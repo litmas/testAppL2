@@ -1,5 +1,5 @@
 
-import { generateExercises, createWorkout, createWorkoutSplit, getRecommendedRepsAndSets, getExerciseTips } from "./assignmentL2/workoutModule/fitnessTracker.js";
+import { generateExercises, createWorkout, createWorkoutSplit, getRecommendedRepsAndSets, getExerciseTips } from "./workoutModule/fitnessTracker.js";
 
 // DOM elements
 const generateExerciseForm = document.getElementById("generateExerciseForm");
