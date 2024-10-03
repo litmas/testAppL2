@@ -1,5 +1,10 @@
+import ExerciseGenerator from "./workoutModule/exerciseGenerator.js";
+import WorkoutPlanner from "./workoutModule/workoutPlanner.js";
+import WorkoutUtility from "./workoutModule/workoutUtility.js";
 
-import { generateExercises, createWorkout, createWorkoutSplit, getRecommendedRepsAndSets, getExerciseTips } from "./workoutModule/fitnessTracker.js";
+const exerciseGenerator = new ExerciseGenerator()
+const workoutPlanner = new WorkoutPlanner();
+const workoutUtility = new WorkoutUtility();
 
 // DOM elements
 const generateExerciseForm = document.getElementById("generateExerciseForm");
@@ -22,10 +27,10 @@ generateExerciseForm.addEventListener("submit", async (event) => {
   const type = document.getElementById("exerciseType").value;
   const difficulty = document.getElementById("exerciseDifficulty").value;
 
-  console.log("Form submitted with values:", { muscle, type, difficulty });
+  console.log("Form submitted with values:", { muscle, type, difficulty }); 
 
   try {
-    const exercises = await generateExercises(muscle, type, difficulty);
+    const exercises = await exerciseGenerator.generateExercises(muscle, type, difficulty);
     console.log(exercises)
 
     console.log("Fetched exercises:", exercises);
@@ -38,12 +43,12 @@ generateExerciseForm.addEventListener("submit", async (event) => {
         Difficulty: ${exercise.difficulty}<br>
         Instructions: ${exercise.instructions}</p>`).join('');
 
-        const recommendations = getRecommendedRepsAndSets(difficulty);
+        const recommendations = workoutUtility.getRecommendedRepsAndSets(difficulty);
       exerciseResultDisplay.innerHTML += `
         <p><strong>Recommended Sets:</strong> ${recommendations.sets}</p>
         <p><strong>Recommended Reps:</strong> ${recommendations.reps}</p>`;
 
-        const tips = getExerciseTips(type);
+        const tips = workoutUtility.getExerciseTips(type);
       exerciseResultDisplay.innerHTML += `
         <p><strong>Exercise Tips:</strong> ${tips}</p>`;
 
@@ -69,7 +74,7 @@ createWorkoutForm.addEventListener("submit", async (event) => {
   const difficulty = document.getElementById("difficulty").value;
 
   try {
-      const workout = await createWorkout(muscles, type, difficulty);
+      const workout = await workoutPlanner.createWorkout(muscles, type, difficulty);
 
       workoutResultDisplay.innerHTML = `
           <div class="workout-plan">
@@ -109,7 +114,7 @@ workoutSplitForm.addEventListener("submit", async (event) => {
 
   try {
 
-    const workoutPlan = await createWorkoutSplit(splitType, workoutType, difficulty);
+    const workoutPlan = await workoutPlanner.createWorkoutSplit(splitType, workoutType, difficulty);
 
     console.log("Workout Plan:", workoutPlan);
 
